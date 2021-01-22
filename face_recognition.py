@@ -22,6 +22,8 @@ face_cascade = cv2.CascadeClassifier('/home/pi/Face/haarcascade_frontalface_defa
 # Wait a certain number of seconds to allow the camera time to warmup
 time.sleep(0.1)
  
+frameCount = 0
+gui = False
 # Capture frames continuously from the camera
 for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
      
@@ -37,18 +39,20 @@ for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port
     #Draw a rectangle around every found face
     for (x,y,w,h) in faces:
         cv2.rectangle(image,(x,y),(x+w,y+h),(255,255,0),4)
+        print ("Found {}" + str(len(faces)) + " face(s)")
         print ("Position X:" + str(x) + " Y:" + str(y) + " W:" + str(w) + " h:" + str(h))
-    # Display the frame using OpenCV
-    #cv2.imshow("Frame", image)
-     
-    # Wait for keyPress for 1 millisecond
-    key = cv2.waitKey(1) & 0xFF
+
      
     # Clear the stream in preparation for the next frame
     raw_capture.truncate(0)
+
+    if gui:
+        # Display the frame using OpenCV
+        cv2.imshow("Frame", image)
      
-    # If the `q` key was pressed, break from the loop
-    if key == ord("q"):
-        cv2.rectangle(image,(x,y),(x+w,y+h),(255,255,0),4)
-        cv2.imwrite("result.jpg",image)
-        break
+        # Wait for keyPress for 1 millisecond
+        key = cv2.waitKey(1) & 0xFF 
+        # If the `q` key was pressed, break from the loop
+        if key == ord("q"):
+            cv2.imwrite("result.jpg",image)
+            break
