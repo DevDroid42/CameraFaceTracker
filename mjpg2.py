@@ -3,6 +3,7 @@ import numpy
 from picamera.array import PiRGBArray # Generates a 3D RGB array
 from picamera import PiCamera # Provides a Python interface for the RPi Camera Module
 import time # Provides time-related functions
+from io import BytesIO
 import cv2 # OpenCV library
 from flask import Flask, render_template, render_template_string, Response
 
@@ -23,10 +24,8 @@ raw_capture = PiRGBArray(camera, size=(160, 120))
 face_cascade = cv2.CascadeClassifier('/home/pi/Face/haarcascade_frontalface_default.xml')
 # Wait a certain number of seconds to allow the camera time to warmup
 time.sleep(0.1)
-print("==========PRINT WORKS=============")
 
 def gen():
-    print("==========GEN WORKS=============")
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True): 
         # Grab the raw NumPy array representing the image
         image = frame.array
@@ -51,41 +50,8 @@ def gen():
 @app.route('/')
 def index():
     """Video streaming"""
-    #return render_template('index.html')
-    return render_template_string('''<html>
-<head>
-    <title>Video Streaming </title>
-</head>
-<body>
-    <div>
-        <h1>Image</h1>
-        <img id="img" src="{{ url_for('video_feed') }}" width = "640" height = "640">
-    </div>
-    <div>
-        <h1>Canvas</h1>
-        <canvas id="canvas" width="640px" height="480px"></canvas>
-    </div>
+    return render_template('main.html')
 
-<script >
-    var ctx = document.getElementById("canvas").getContext('2d');
-    var img = new Image();
-    img.src = "{{ url_for('video_feed') }}";
-
-    // need only for static image
-    //img.onload = function(){   
-    //    ctx.drawImage(img, 0, 0);
-    //};
-
-    // need only for animated image
-    function refreshCanvas(){
-        ctx.drawImage(img, 0, 0);
-    };
-    window.setInterval("refreshCanvas()", 50);
-
-</script>
-
-</body>
-</html>''')
 
 @app.route('/video_feed')
 def video_feed():
