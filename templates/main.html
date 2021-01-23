@@ -1,34 +1,51 @@
 <html>
+
 <head>
     <title>Video Streaming </title>
 </head>
-<body>
-    <div>
-        <h1>Image</h1>
-        <img id="img" src="{{ url_for('video_feed') }}" width = "640" height = "480">
+
+<body style="background-color:#000000;">
+    <div style="background-image: url('/static/particles.png');">
+
+        <div>
+            <h1 style="color: aliceblue;">Targeting System</h1>
+            <img id="img" src="{{ url_for('video_feed') }}" width="640" height="480" class="center">
+            <style>
+                img {
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                }
+            </style>
+        </div>
     </div>
-    <div>
-        <h1>Canvas</h1>
-        <canvas id="canvas" width="640px" height="480px"></canvas>
-    </div>
 
-<script >
-    var ctx = document.getElementById("canvas").getContext('2d');
-    var img = new Image();
-    img.src = "{{ url_for('video_feed') }}";
+    <script>
+        var ctx = document.getElementById("canvas").getContext('2d');
+        var img = new Image();
+        img.src = "{{ url_for('video_feed') }}";
 
-    // need only for static image
-    //img.onload = function(){   
-    //    ctx.drawImage(img, 0, 0);
-    //};
+        // need only for static image
+        //img.onload = function(){   
+        //    ctx.drawImage(img, 0, 0);
+        //};
 
-    // need only for animated image
-    function refreshCanvas(){
-        ctx.drawImage(img, 0, 0);
-    };
-    window.setInterval("refreshCanvas()", 50);
+        // need only for animated image
+        function refreshCanvas() {
+            ctx.drawImage(img, 0, 0);
+        };
+        window.setInterval("refreshCanvas()", 50);
 
-</script>
+    </script>
+
+    <style>
+        h1 {
+            text-align: center;
+        }
+    </style>
 
 </body>
+
 </html>

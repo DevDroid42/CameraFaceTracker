@@ -37,7 +37,7 @@ def gen():
 
         #Draw a rectangle around every found face
         for (x,y,w,h) in faces:
-            cv2.rectangle(image,(x,y),(x+w,y+h),(255,255,0),4)
+            cv2.rectangle(image,(x,y),(x+w,y+h),(255,255,0),2)
             print ("Found {}" + str(len(faces)) + " face(s)")
             print ("Position X:" + str(x) + " Y:" + str(y) + " W:" + str(w) + " h:" + str(h))
 
