@@ -26,6 +26,7 @@ face_cascade = cv2.CascadeClassifier('/home/pi/Face/haarcascade_frontalface_defa
 time.sleep(0.1)
 
 def gen():
+    
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True): 
         # Grab the raw NumPy array representing the image
         image = frame.array
@@ -46,19 +47,24 @@ def gen():
         b'Content-Type: image/jpeg\r\n\r\n' + open('stream.jpg', 'rb').read() + b'\r\n\r\n')
         raw_capture.truncate(0)
 
-
+#loads main.html
 @app.route('/')
 def index():
     """Video streaming"""
     return render_template('main.html')
 
-
+#main.html references this meathod. app.route lets you create "urls" that html can reference
 @app.route('/video_feed')
 def video_feed():
     """Video streaming route. Put this in the src attribute of an img tag."""
+    #runs the gen meathod to get html code to send to the browser. This includes the generated image on disk
     return Response(gen(),
                 mimetype='multipart/x-mixed-replace; boundary=frame')
 
+@app.route('/button')
+def button():
+    print("Hello World")
+    return render_template('main.html')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
