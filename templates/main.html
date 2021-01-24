@@ -1,30 +1,106 @@
 <html>
 
 <head>
-    <title>Video Streaming </title>
+    <title>Raspi Human Tracking</title>
+    <style>
+        h2 {
+            text-align: center;
+        }
+
+        .btn-group .button {
+            background-color: #4CAF50;
+            /* Green */
+            border: 1px solid white;
+            transition-duration: 0.4s;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: 150px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        .button1 {
+            background-color: #4CAF50;
+            /* Green */
+            border: 1px solid white;
+            transition-duration: 0.4s;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            width: 150px;
+            cursor: pointer;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-group .button:not(:last-child) {
+            border-bottom: none;
+            /* Prevent double borders */
+        }
+
+        .btn-group .button:hover {
+            background-color: #c4ffd1;
+        }
+    </style>
 </head>
 
 <body style="background-color:#000000;">
     <div style="background-image: url('/static/particles.png');">
-
         <div>
-            <h1 style="color: aliceblue;">Targeting System</h1>
-            <img id="img" src="{{ url_for('video_feed') }}" width="640" height="480" class="center">
-            <style>
-                img {
-                    display: block;
-                    margin-left: auto;
-                    margin-right: auto;
-                    margin-top: auto;
-                    margin-bottom: auto;
-                }
-            </style>
+            <h2 style="color: aliceblue;">Targeting System</h2>
+            <div id="parent" class="center" style="display: inline">
+
+                <img id="img" src="{{ url_for('video_feed') }}" width="640" height="480">
+                <style>
+                    img {
+                        display: block;
+                        margin-left: auto;
+                        margin-right: auto;
+                        margin-top: auto;
+                        margin-bottom: auto;
+                    }
+                </style>
+                <div class="btn-group">
+                    <h2 style="color: aliceblue;">Controls</h2>
+                    <form action="">
+                        <button class="button" style="background-color:#4CAF50;">Up</button>
+                    </form>
+                    <form action="">
+                        <button class="button" style="background-color: red;">Fire</button>
+                    </form>
+                    <form action="">
+                        <button class="button" style="background-color:#4CAF50;">Down</button>
+                    </form>
+                    <form action="" style="margin-top: -135px; margin-left: 25%; margin-right: 75%;">
+                        <button class="button1" style="background-color:#4CAF50;">Left</button>
+                    </form>
+                    <form action="" style="margin-top: -135px; margin-left: 60%; margin-right: 25%;">
+                        <button class="button1" style="background-color:#4CAF50;">Right</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        
-        <h2>Button</h2>
-        <form action="button">
-            <button type="submit">Press Button!</button>
-            <form>
+    </div>
+    <div style="margin-top: -800px;">
+        <h3 style="color: aliceblue;">Tracking System Power</h3>
+        <div class="btn-group" style="width:300px">
+            <form action="disableTracking">
+                <button class="button" style="background-color:#4CAF50;">Disable Tracking</button>
+            </form>
+            <form action="enableTracking">
+                <button class="button" style="background-color: red;" style="margin-left: auto;">Enable
+                    Tracking</button>
+            </form>
+        </div>
     </div>
 
     <script>
