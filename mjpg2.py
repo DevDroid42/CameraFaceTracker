@@ -39,7 +39,7 @@ coords = [0,0,0,0]
 pinStates = [False,False,False,False,False]
 
 #global settings. manipulation music be locked via setting lock
-detectFaces = [False]
+detectFaces = [True]
 
 def record():
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True): 
@@ -186,8 +186,8 @@ def fire():
 def track(coords):
     xper = coords[0]
     yper = coords[1]
-    print("xPer" + str(xper))
-    print("yPer" + str(yper))
+    #print("xPer" + str(xper))
+    #print("yPer" + str(yper))
     if(xper > 60):
         right()
     else:
